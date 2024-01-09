@@ -6,12 +6,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.crusoandroid.recyclerview.R;
+import br.com.crusoandroid.recyclerview.RecyclerItemClickListener;
 import br.com.crusoandroid.recyclerview.adapter.Adapter;
 import br.com.crusoandroid.recyclerview.model.Filme;
 
@@ -41,6 +45,37 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true); // metodo que otimiza, tendo um tamanho fixo
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL)); // linha divisória
         recyclerView.setAdapter(adapter);
+
+
+        //evento de clique
+        recyclerView.addOnItemTouchListener(
+            new RecyclerItemClickListener(
+                    getApplicationContext(),
+                    recyclerView,
+                    new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Item pressionado",
+                                    Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+
+                        @Override
+                        public void onLongItemClick(View view, int position) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Clique longo",
+                                    Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        }
+                    }
+            )
+        );
 
     }
      public void criarFilmes(){
